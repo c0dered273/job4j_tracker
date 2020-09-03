@@ -4,11 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Tracker {
+public class MemTracker implements Store {
     /**
      * Массив для хранение заявок.
      */
     private final List<Item> items = new ArrayList<>();
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 
     /**
      * Метод реализаущий добавление заявки в хранилище

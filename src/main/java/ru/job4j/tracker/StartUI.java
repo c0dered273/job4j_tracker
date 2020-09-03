@@ -26,7 +26,9 @@ public class StartUI {
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         Input validate = new ValidateInput(input);
-        Store tracker = new MemTracker();
+//        Store tracker = new MemTracker();
+        Store tracker = new SqlTracker();
+        tracker.init();
         List<UserAction> actions = new ArrayList<>();
         actions.add(new ru.job4j.tracker.CreateAction());
         actions.add(new ru.job4j.tracker.FindAllAction());

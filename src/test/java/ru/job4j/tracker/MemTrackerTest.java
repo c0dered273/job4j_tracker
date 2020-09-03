@@ -9,10 +9,10 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class TrackerTest {
+public class MemTrackerTest {
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         Item item = new Item("test1");
         tracker.add(item);
         Item result = tracker.findById(item.getId());
@@ -21,7 +21,7 @@ public class TrackerTest {
 
     @Test
     public void whenReplaceNameThenReturnNewName() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         Item previous = new Item("test1");
         // Добавляем заявку в трекер. Теперь в объект проинициализирован id.
         tracker.add(previous);
@@ -37,7 +37,7 @@ public class TrackerTest {
 
     @Test
     public void replaceWithNonExistId() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         tracker.add(new Item("Test"));
         boolean result = tracker.replace("0", new Item("NonExist"));
         assertThat(result, is(false));
@@ -45,7 +45,7 @@ public class TrackerTest {
 
     @Test
     public void deleteItemTest() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         List<Item> ref = new ArrayList<>();
         Item delItem = new Item("delItem");
         Item test1 = new Item("Test1");
@@ -74,7 +74,7 @@ public class TrackerTest {
 
     @Test
     public void deleteWithNonExistId() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         tracker.add(new Item("Test"));
         boolean result = tracker.delete("0");
         assertThat(result, is(false));
@@ -82,7 +82,7 @@ public class TrackerTest {
 
     @Test
     public void findAllWithEmptyArray() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         List<Item> result = tracker.findAll();
         List<Item> ref = new ArrayList<>();
         assertThat(result, is(ref));
@@ -90,7 +90,7 @@ public class TrackerTest {
 
     @Test
     public void findByNameTest() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         List<Item> ref = new ArrayList<>();
         Item test1 = new Item("Test1");
         Item test2 = new Item("Test2");
@@ -113,7 +113,7 @@ public class TrackerTest {
 
     @Test
     public void findByNameNonExist() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         Item test1 = new Item("Test1");
         Item test2 = new Item("Test2");
         Item test3 = new Item("Test3");
@@ -133,7 +133,7 @@ public class TrackerTest {
 
     @Test
     public void findByIdNonExist() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         Item test1 = new Item("Test1");
         Item test2 = new Item("Test2");
         Item test3 = new Item("Test3");
