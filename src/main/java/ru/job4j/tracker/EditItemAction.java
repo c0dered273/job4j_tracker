@@ -7,11 +7,11 @@ public class EditItemAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, MemTracker memTracker) {
         String editId = input.askStr("Enter ID: ");
         String newName = input.askStr("Enter new name: ");
         Item newItem = new Item(newName);
-        boolean result = tracker.replace(editId, newItem);
+        boolean result = memTracker.replace(editId, newItem);
         if (result) {
             System.out.println("OK");
         } else {

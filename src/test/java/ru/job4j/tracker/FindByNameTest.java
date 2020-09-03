@@ -18,12 +18,12 @@ public class FindByNameTest {
         Item item1 = new Item("Test");
         Item item2 = new Item("TestNot");
         Item item3 = new Item("Test");
-        Tracker tracker = new Tracker();
-        tracker.add(item1);
-        tracker.add(item2);
-        tracker.add(item3);
+        MemTracker memTracker = new MemTracker();
+        memTracker.add(item1);
+        memTracker.add(item2);
+        memTracker.add(item3);
         FindByNameAction action = new FindByNameAction();
-        action.execute(new StubInput(new String[] {"Test"}), tracker);
+        action.execute(new StubInput(new String[] {"Test"}), memTracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("ID: " + item1.getId() + "    " + "Name: " + item1.getName())
                 .add("ID: " + item3.getId() + "    " + "Name: " + item3.getName())

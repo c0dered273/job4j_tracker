@@ -9,9 +9,9 @@ public class FindByNameAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, MemTracker memTracker) {
         String itemName = input.askStr("Enter item name: ");
-        List<Item> result = tracker.findByName(itemName);
+        List<Item> result = memTracker.findByName(itemName);
         if (!result.isEmpty()) {
             for (Item item : result) {
                 System.out.println("ID: " + item.getId() + "    " + "Name: " + item.getName());

@@ -5,29 +5,29 @@ import java.util.List;
 public enum TrackerEnumSingleton {
     INSTANCE;
 
-    private static final Tracker TRACKER = new Tracker();
+    private static final MemTracker MEM_TRACKER = new MemTracker();
 
     public Item add(Item item) {
-        return TRACKER.add(item);
+        return MEM_TRACKER.add(item);
     }
 
     public boolean replace(String id, Item item) {
-        return TRACKER.replace(id, item);
+        return MEM_TRACKER.replace(id, item);
     }
 
     public boolean delete(String id) {
-        return TRACKER.delete(id);
+        return MEM_TRACKER.delete(id);
     }
 
     public List<Item> findAll() {
-        return TRACKER.findAll();
+        return MEM_TRACKER.findAll();
     }
 
     public List<Item> findByName(String key) {
-        return TRACKER.findByName(key);
+        return MEM_TRACKER.findByName(key);
     }
 
     public Item findById(String id) {
-        return TRACKER.findById(id);
+        return MEM_TRACKER.findById(id);
     }
 }
