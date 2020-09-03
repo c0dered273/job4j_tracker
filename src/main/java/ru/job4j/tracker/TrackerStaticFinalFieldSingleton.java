@@ -6,7 +6,7 @@ public class TrackerStaticFinalFieldSingleton {
 
     private static final TrackerStaticFinalFieldSingleton INSTANCE
             = new TrackerStaticFinalFieldSingleton();
-    private static final MemTracker MEM_TRACKER = new MemTracker();
+    private static final Store TRACKER = new MemTracker();
 
     private TrackerStaticFinalFieldSingleton() {
     }
@@ -16,26 +16,26 @@ public class TrackerStaticFinalFieldSingleton {
     }
 
     public Item add(Item item) {
-        return MEM_TRACKER.add(item);
+        return TRACKER.add(item);
     }
 
     public boolean replace(String id, Item item) {
-        return MEM_TRACKER.replace(id, item);
+        return TRACKER.replace(id, item);
     }
 
     public boolean delete(String id) {
-        return MEM_TRACKER.delete(id);
+        return TRACKER.delete(id);
     }
 
     public List<Item> findAll() {
-        return MEM_TRACKER.findAll();
+        return TRACKER.findAll();
     }
 
     public List<Item> findByName(String key) {
-        return MEM_TRACKER.findByName(key);
+        return TRACKER.findByName(key);
     }
 
     public Item findById(String id) {
-        return MEM_TRACKER.findById(id);
+        return TRACKER.findById(id);
     }
 }

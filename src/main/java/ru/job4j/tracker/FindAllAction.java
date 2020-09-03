@@ -9,7 +9,7 @@ public class FindAllAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, MemTracker memTracker) {
+    public boolean execute(Input input, Store memTracker) {
         List<Item> items = memTracker.findAll();
         for (Item item : items) {
             System.out.println("ID: " + item.getId() + "    " + "Name: " + item.getName());

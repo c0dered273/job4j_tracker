@@ -7,9 +7,9 @@ public class CreateAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, MemTracker memTracker) {
+    public boolean execute(Input input, Store tracker) {
         String name = input.askStr("Enter name: ");
-        memTracker.add(new Item(name));
+        tracker.add(new Item(name));
         return true;
     }
 }

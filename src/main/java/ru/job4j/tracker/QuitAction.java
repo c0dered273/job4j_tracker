@@ -7,7 +7,7 @@ public class QuitAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, MemTracker memTracker) {
+    public boolean execute(Input input, Store tracker) {
         return false;
     }
 }
