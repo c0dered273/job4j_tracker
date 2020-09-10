@@ -9,7 +9,8 @@ public class CreateAction implements UserAction {
     @Override
     public boolean execute(Input input, Store tracker) {
         String name = input.askStr("Enter name: ");
-        tracker.add(new Item(name));
+        String description = input.askStr("Enter description: ");
+        tracker.add(new Item(name, description));
         return true;
     }
 }

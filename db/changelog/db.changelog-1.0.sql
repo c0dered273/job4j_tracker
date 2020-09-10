@@ -1,6 +1,7 @@
 create table Items
 (
     id   serial primary key,
-    name text
+    name varchar(255),
+    description text
 );
 

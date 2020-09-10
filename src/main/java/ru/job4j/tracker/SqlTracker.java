@@ -11,10 +11,21 @@ import java.util.Properties;
 
 public class SqlTracker implements Store {
     private static final Logger logger = LoggerFactory.getLogger(SqlTracker.class);
+    private final String propertyFile;
     private Connection cn;
 
+    public SqlTracker(String propertyFile) {
+        this.propertyFile = propertyFile;
+        init();
+    }
+
+    public SqlTracker(Connection cn) {
+        this.cn = cn;
+        this.propertyFile = "app.properties";
+    }
+
     public void init() {
-        try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream(propertyFile)) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("driver-class-name"));
@@ -41,9 +52,10 @@ public class SqlTracker implements Store {
             logger.error("Connection to store is not initialized.");
             return null;
         }
-        String addQuery = "INSERT INTO items(name) VALUES (?) RETURNING id";
+        String addQuery = "INSERT INTO items(name, description) VALUES (?, ?) RETURNING id";
         try (PreparedStatement statement = cn.prepareStatement(addQuery, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, item.getName());
+            statement.setString(2, item.getDescription());
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Add item filed: no affected raws.");
@@ -63,13 +75,14 @@ public class SqlTracker implements Store {
     @Override
     public boolean replace(String id, Item item) {
         boolean rsl = true;
-        String replaceQuery = "UPDATE items SET name = ? where id = ?";
+        String replaceQuery = "UPDATE items SET name = ?, description = ? where id = ?";
         try (PreparedStatement statement = cn.prepareStatement(replaceQuery)) {
             statement.setString(1, item.getName());
-            statement.setLong(2, Long.parseLong(id));
+            statement.setString(2, item.getDescription());
+            statement.setLong(3, Long.parseLong(id));
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                logger.info("Item with id = {} not found.", id);
+                logger.info("Item with id = \"{}\" not found.", id);
                 rsl = false;
             }
         } catch (SQLException e) {
@@ -87,7 +100,7 @@ public class SqlTracker implements Store {
             statement.setLong(1, Long.parseLong(id));
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                logger.info("Item with id = {} not found.", id);
+                logger.info("Item with id = \"{}\" not found.", id);
                 rsl = false;
             }
         } catch (SQLException e) {
@@ -117,7 +130,7 @@ public class SqlTracker implements Store {
             statement.setString(1, key);
             rsl = parseResult(statement.executeQuery());
             if (rsl.isEmpty()) {
-                logger.info("Item with name = {} not found", key);
+                logger.info("Item with name = \"{}\" not found", key);
             }
         } catch (SQLException e) {
             logger.error("Find by name statement error.", e);
@@ -133,7 +146,7 @@ public class SqlTracker implements Store {
             statement.setLong(1, Long.parseLong(id));
             rsl = parseResult(statement.executeQuery());
             if (rsl.isEmpty()) {
-                logger.info("Item with id = {} not found", id);
+                logger.info("Item with id = \"{}\" not found", id);
             }
         } catch (SQLException e) {
             logger.error("Find by id statement error.", e);
@@ -146,7 +159,8 @@ public class SqlTracker implements Store {
         while (resultSet.next()) {
             String id = String.valueOf(resultSet.getLong("id"));
             String name = resultSet.getString("name");
-            Item item = new Item(name);
+            String description = resultSet.getString("description");
+            Item item = new Item(name, description);
             item.setId(id);
             rsl.add(item);
         }
