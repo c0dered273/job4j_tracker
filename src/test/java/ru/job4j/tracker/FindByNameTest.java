@@ -6,8 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.StringJoiner;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.is;
 
 public class FindByNameTest {
     @Test
@@ -15,9 +15,9 @@ public class FindByNameTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream defOut = System.out;
         System.setOut(new PrintStream(out));
-        Item item1 = new Item("Test");
-        Item item2 = new Item("TestNot");
-        Item item3 = new Item("Test");
+        Item item1 = new Item("Test", "Test desc");
+        Item item2 = new Item("TestNot", "Test desc");
+        Item item3 = new Item("Test", "Test desc");
         Store tracker = new MemTracker();
         tracker.add(item1);
         tracker.add(item2);
@@ -25,8 +25,8 @@ public class FindByNameTest {
         FindByNameAction action = new FindByNameAction();
         action.execute(new StubInput(new String[] {"Test"}), tracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-                .add("ID: " + item1.getId() + "    " + "Name: " + item1.getName())
-                .add("ID: " + item3.getId() + "    " + "Name: " + item3.getName())
+                .add("ID: " + item1.getId() + " " + "Name: " + item1.getName() + " " + "Description: " + item1.getDescription())
+                .add("ID: " + item3.getId() + " " + "Name: " + item3.getName() + " " + "Description: " + item3.getDescription())
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));
     }

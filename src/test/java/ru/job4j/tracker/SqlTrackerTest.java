@@ -1,6 +1,5 @@
 package ru.job4j.tracker;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
