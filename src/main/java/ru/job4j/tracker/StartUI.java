@@ -27,15 +27,19 @@ public class StartUI {
         Input input = new ConsoleInput();
         Input validate = new ValidateInput(input);
 //        Store tracker = new MemTracker();
-        Store tracker = new SqlTracker("app.properties");
-        List<UserAction> actions = new ArrayList<>();
-        actions.add(new ru.job4j.tracker.CreateAction());
-        actions.add(new ru.job4j.tracker.FindAllAction());
-        actions.add(new ru.job4j.tracker.EditItemAction());
-        actions.add(new ru.job4j.tracker.DeleteItemAction());
-        actions.add(new ru.job4j.tracker.FindByIdAction());
-        actions.add(new FindByNameAction());
-        actions.add(new QuitAction());
-        new StartUI().init(validate, tracker, actions);
+//        Store tracker = new SqlTracker("app.properties");
+        try (Store tracker = new HbmTracker()) {
+            List<UserAction> actions = new ArrayList<>();
+            actions.add(new ru.job4j.tracker.CreateAction());
+            actions.add(new ru.job4j.tracker.FindAllAction());
+            actions.add(new ru.job4j.tracker.EditItemAction());
+            actions.add(new ru.job4j.tracker.DeleteItemAction());
+            actions.add(new ru.job4j.tracker.FindByIdAction());
+            actions.add(new FindByNameAction());
+            actions.add(new QuitAction());
+            new StartUI().init(validate, tracker, actions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
