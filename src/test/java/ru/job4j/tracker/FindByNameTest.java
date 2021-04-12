@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -28,6 +29,27 @@ public class FindByNameTest {
                 .add("ID: " + item1.getId() + " " + "Name: " + item1.getName() + " " + "Description: " + item1.getDescription())
                 .add("ID: " + item3.getId() + " " + "Name: " + item3.getName() + " " + "Description: " + item3.getDescription())
                 .toString();
-        assertThat(new String(out.toByteArray()), is(expect));
+        assertThat(out.toString(), is(expect));
+        System.setOut(defOut);
+    }
+
+    @Test
+    public void whenCheckMocked() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream defOut = System.out;
+        System.setOut(new PrintStream(out));
+        String name = "Name";
+        Item item = new Item(name, "Description");
+        Store tracker = new MemTracker();
+        tracker.add(item);
+        FindByNameAction action = new FindByNameAction();
+        Input mockInput = Mockito.mock(Input.class);
+        Mockito.when(mockInput.askStr(Mockito.anyString())).thenReturn(name);
+        action.execute(mockInput, tracker);
+        String expect = "ID: " + item.getId() + " "
+                + "Name: " + item.getName() + " "
+                + "Description: " + item.getDescription() + System.lineSeparator();
+        assertThat(out.toString(), is(expect));
+        System.setOut(defOut);
     }
 }
