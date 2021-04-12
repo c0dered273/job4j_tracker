@@ -19,11 +19,11 @@ public class TrackerStaticFinalFieldSingleton {
         return TRACKER.add(item);
     }
 
-    public boolean replace(String id, Item item) {
+    public boolean replace(Integer id, Item item) {
         return TRACKER.replace(id, item);
     }
 
-    public boolean delete(String id) {
+    public boolean delete(Integer id) {
         return TRACKER.delete(id);
     }
 
@@ -35,7 +35,7 @@ public class TrackerStaticFinalFieldSingleton {
         return TRACKER.findByName(key);
     }
 
-    public Item findById(String id) {
+    public Item findById(Integer id) {
         return TRACKER.findById(id);
     }
 }

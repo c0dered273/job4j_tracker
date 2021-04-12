@@ -46,8 +46,8 @@
       <id>test</id>
       <properties>
         <db.url>jdbc:postgresql://127.0.0.1:5432/tracker</db.url>
-        <db.username>postgres</db.username>
-        <db.password>postgres</db.password>
+        <db.username>tracker</db.username>
+        <db.password>tracker</db.password>
         <db.driver>org.postgresql.Driver</db.driver>
       </properties>
     </profile>
@@ -55,8 +55,8 @@
       <id>production</id>
       <properties>
         <db.url>jdbc:postgresql://127.0.0.1:5432/tracker</db.url>
-        <db.username>postgres</db.username>
-        <db.password>postgres</db.password>
+        <db.username>tracker</db.username>
+        <db.password>tracker</db.password>
         <db.driver>org.postgresql.Driver</db.driver>
       </properties>
     </profile>
@@ -67,8 +67,8 @@
       </activation>
       <properties>
         <db.url>jdbc:postgresql://127.0.0.1:5432/tracker</db.url>
-        <db.username>postgres</db.username>
-        <db.password>postgres</db.password>
+        <db.username>tracker</db.username>
+        <db.password>tracker</db.password>
         <db.driver>org.postgresql.Driver</db.driver>
       </properties>
     </profile>

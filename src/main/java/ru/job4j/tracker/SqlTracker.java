@@ -62,7 +62,7 @@ public class SqlTracker implements Store {
             }
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                item.setId(String.valueOf(generatedKeys.getLong(1)));
+                item.setId(generatedKeys.getInt(1));
             } else {
                 throw new SQLException("Add item failed: no id obtained.");
             }
@@ -73,13 +73,13 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public boolean replace(String id, Item item) {
+    public boolean replace(Integer id, Item item) {
         boolean rsl = true;
         String replaceQuery = "UPDATE items SET name = ?, description = ? where id = ?";
         try (PreparedStatement statement = cn.prepareStatement(replaceQuery)) {
             statement.setString(1, item.getName());
             statement.setString(2, item.getDescription());
-            statement.setLong(3, Long.parseLong(id));
+            statement.setInt(3, id);
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 logger.info("Item with id = \"{}\" not found.", id);
@@ -93,11 +93,11 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public boolean delete(String id) {
+    public boolean delete(Integer id) {
         boolean rsl = true;
         String deleteQuery = "DELETE FROM items WHERE items.id = ?";
         try (PreparedStatement statement = cn.prepareStatement(deleteQuery)) {
-            statement.setLong(1, Long.parseLong(id));
+            statement.setInt(1, id);
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 logger.info("Item with id = \"{}\" not found.", id);
@@ -139,11 +139,11 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public Item findById(String id) {
+    public Item findById(Integer id) {
         List<Item> rsl = null;
         String findQuery = "SELECT * FROM items as i WHERE i.id = ?";
         try (PreparedStatement statement = cn.prepareStatement(findQuery)) {
-            statement.setLong(1, Long.parseLong(id));
+            statement.setInt(1, id);
             rsl = parseResult(statement.executeQuery());
             if (rsl.isEmpty()) {
                 logger.info("Item with id = \"{}\" not found", id);
@@ -157,7 +157,7 @@ public class SqlTracker implements Store {
     private List<Item> parseResult(ResultSet resultSet) throws SQLException {
         List<Item> rsl = new ArrayList<>();
         while (resultSet.next()) {
-            String id = String.valueOf(resultSet.getLong("id"));
+            Integer id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String description = resultSet.getString("description");
             Item item = new Item(name, description);

@@ -39,7 +39,7 @@ public class MemTrackerTest {
     public void replaceWithNonExistId() {
         Store tracker = new MemTracker();
         tracker.add(new Item("Test"));
-        boolean result = tracker.replace("0", new Item("NonExist"));
+        boolean result = tracker.replace(0, new Item("NonExist"));
         assertThat(result, is(false));
     }
 
@@ -76,7 +76,7 @@ public class MemTrackerTest {
     public void deleteWithNonExistId() {
         Store tracker = new MemTracker();
         tracker.add(new Item("Test"));
-        boolean result = tracker.delete("0");
+        boolean result = tracker.delete(0);
         assertThat(result, is(false));
     }
 
@@ -140,7 +140,7 @@ public class MemTrackerTest {
         tracker.add(test1);
         tracker.add(test2);
         tracker.add(test3);
-        Item result = tracker.findById("0");
+        Item result = tracker.findById(0);
         assertThat(result, is(nullValue()));
     }
 

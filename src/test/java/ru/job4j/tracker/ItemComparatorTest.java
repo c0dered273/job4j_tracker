@@ -18,13 +18,13 @@ public class ItemComparatorTest {
     @Before
     public void prepareDate() {
         Item item1 = new Item("Name1");
-        item1.setId("111");
+        item1.setId(111);
         Item item2 = new Item("Name2");
-        item2.setId("222");
+        item2.setId(222);
         Item item3 = new Item("Name3");
-        item3.setId("333");
+        item3.setId(333);
         Item item4 = new Item("Name2");
-        item4.setId("444");
+        item4.setId(444);
         result.add(item3);
         result.add(item2);
         result.add(item1);

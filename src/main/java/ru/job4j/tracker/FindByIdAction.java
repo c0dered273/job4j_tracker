@@ -9,7 +9,7 @@ public class FindByIdAction implements UserAction {
     @Override
     public boolean execute(Input input, Store tracker) {
         System.out.print("Enter ID: ");
-        String fndId = input.askStr("Enter ID: ");
+        Integer fndId = input.askInt("Enter ID: ");
         Item result = tracker.findById(fndId);
         if (result != null) {
             System.out.println("ID: " + result.getId() + " "

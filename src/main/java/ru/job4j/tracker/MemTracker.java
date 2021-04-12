@@ -36,11 +36,11 @@ public class MemTracker implements Store {
      * @param item Заявка
      * @return Результат операции
      */
-    public boolean replace(String id, Item item) {
+    public boolean replace(Integer id, Item item) {
         boolean result = false;
         int index = indexById(id);
         if (index != -1) {
-            String oldId = items.get(index).getId();
+            Integer oldId = items.get(index).getId();
             item.setId(oldId);
             items.set(index, item);
             result = true;
@@ -53,7 +53,7 @@ public class MemTracker implements Store {
      * @param id Уникальный идентификатор заявки
      * @return Результат операции
      */
-    public boolean delete(String id) {
+    public boolean delete(Integer id) {
         boolean result = false;
         int index = indexById(id);
         if (index != -1) {
@@ -91,7 +91,7 @@ public class MemTracker implements Store {
      * @param id Идентификатор
      * @return Заявка или null
      */
-    public Item findById(String id) {
+    public Item findById(Integer id) {
         int index = this.indexById(id);
         if (index != -1) {
             return items.get(index);
@@ -104,9 +104,9 @@ public class MemTracker implements Store {
      * Так как у заявки нет уникальности полей, имени и описание. Для идентификации нам нужен уникальный ключ.
      * @return Уникальный ключ.
      */
-    private String generateId() {
+    private Integer generateId() {
         Random rm = new Random();
-        return String.valueOf(rm.nextLong() + System.currentTimeMillis());
+        return (int)(rm.nextLong() + System.currentTimeMillis());
     }
 
     /**
@@ -114,7 +114,7 @@ public class MemTracker implements Store {
      * @param id Идентификатор
      * @return Индекс массива или -1 если такого элемента нет
      */
-    private int indexById(String id) {
+    private int indexById(Integer id) {
         int index = 0;
         for (Item item : items) {
             if (item.getId().equals(id)) {
