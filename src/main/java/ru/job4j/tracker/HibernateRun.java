@@ -6,10 +6,11 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class HibernateRun {
-    public static void main(String[] args) {
+    private static void learnHibernate() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure().build();
         try {
@@ -29,6 +30,40 @@ public class HibernateRun {
         } finally {
             StandardServiceRegistryBuilder.destroy(registry);
         }
+    }
+
+    private static void schemaGeneration() {
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure()
+                .build();
+        try {
+            SessionFactory sf = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            create(new Item(
+                    "Name1",
+                    "Description1",
+                    new Timestamp(System.currentTimeMillis())),
+                    sf);
+            create(new Item(
+                            "Name2",
+                            "Description2",
+                            new Timestamp(System.currentTimeMillis())),
+                    sf);
+            create(new Item(
+                            "Name3",
+                            "Description3",
+                            new Timestamp(System.currentTimeMillis())),
+                    sf);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+    }
+
+    public static void main(String[] args) {
+        schemaGeneration();
     }
 
     public static Item create(Item item, SessionFactory sf) {
