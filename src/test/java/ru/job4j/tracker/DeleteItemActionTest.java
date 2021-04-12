@@ -20,7 +20,7 @@ public class DeleteItemActionTest {
         tracker.add(item);
         DeleteItemAction action = new DeleteItemAction();
         Input mockInput = Mockito.mock(Input.class);
-        Mockito.when(mockInput.askStr(Mockito.anyString())).thenReturn(item.getId());
+        Mockito.when(mockInput.askInt(Mockito.anyString())).thenReturn(item.getId());
         action.execute(mockInput, tracker);
         String expectOk = "OK" + System.lineSeparator();
         assertThat(out.toString(), is(expectOk));

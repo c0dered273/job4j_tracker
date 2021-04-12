@@ -20,7 +20,7 @@ public class FindByIdActionTest {
         tracker.add(item);
         FindByIdAction action = new FindByIdAction();
         Input mockInput = Mockito.mock(Input.class);
-        Mockito.when(mockInput.askStr(Mockito.anyString())).thenReturn(item.getId());
+        Mockito.when(mockInput.askInt(Mockito.anyString())).thenReturn(item.getId());
         action.execute(mockInput, tracker);
         String expect = "ID: " + item.getId() + " "
                 + "Name: " + item.getName() + " "
